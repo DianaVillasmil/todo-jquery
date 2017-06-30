@@ -2,30 +2,48 @@
 
 var tareas = [];
 
-//
+//GENERADOR DE NUMEROS ALEATORIOS 
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+//SE EJECUTA LUEGO QUE LA PAGINA YA CARGO
+
 $(document).ready(function () {
+
+    //VACIA LOS ELEMENTOS DEL DOM QUE CONTIENEN A LAS LISTAS
 
     function limpiarListas() {
         $('#pendientes').html('');
         $('#terminadas').html('');
     }
 
+    //SE EJECUTA CADA VEZ QUE EXISTAN MODIFICACIONES A LAS LISTAS PARA REFRESCAR EL DOM
+
     function refrescarListas() {
         limpiarListas();
+
+        //GENERA UN ARREGLO FILTRANDO LAS TAREAS PENDIENTES
+
         var pendientes = tareas.filter((tarea)=>{
             return !tarea.listo;
         });
+
+        //GENERA UN ARREGLO FILTRANDO LAS TAREAS TERMINADAS
+
         var terminadas = tareas.filter((tarea)=>{
             return tarea.listo;
         });
 
+        //RECORRO LAS TAREAS PENDIENTES E INCERTO UN li POR CADA UNA DE ELLAS 
+
         pendientes.forEach((tarea, i)=>{
+
+            //OPERADOR TERNARIO (SENTENCIA ? VALOR VERDADERO : VALOR FALSO)
+
             var checked = tarea.listo ? 'checked=""' : '';
+            
             var html = `<li class="section valign-wrapper row">
             <span class="col s9 left-align valign">
                 <input type="checkbox" id="todo-` + tarea.id + `" class="todo" ` + checked + `/>
@@ -38,6 +56,8 @@ $(document).ready(function () {
 
             $('#pendientes').append(html);
         });
+
+       //RECORRO LAS TAREAS TERMINADAS E INCERTO UN li POR CADA UNA DE ELLAS
 
         terminadas.forEach((tarea, i)=>{
             var checked = tarea.listo ? 'checked=""' : '';
